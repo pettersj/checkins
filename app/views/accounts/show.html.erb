@@ -1,0 +1,18 @@
+<div class="page-header">
+  <%= link_to accounts_path, class: 'btn btn-default' do %>
+    All Accounts
+  <% end %>
+  <%= link_to edit_account_path(@account), class: 'btn btn-primary' do %>
+    Edit
+  <% end %>
+  <h1>Show account</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Name:</dt>
+  <dd><%= @account.name %></dd>
+
+  <dt>User:</dt>
+  <dd><%= @account.user %></dd>
+
+</dl>

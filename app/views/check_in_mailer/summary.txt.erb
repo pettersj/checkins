@@ -1,0 +1,17 @@
+Summary of your check-in "<%= @check_in.name %>"
+
+	<% @answers.each do |answer| %>
+			<%= answer.user.name %> answered at <%= answer.created_at.strftime("%d.%b %Y - %H:%M") %>
+			<%= answer.body %>
+
+		-------
+
+	<% end %>
+
+
+
+
+-------------------------------
+
+This message was sent from <%= link_to @account.name, account_root_url(@account) %> through <%= link_to "CheckIn", root_url %>
+<%= link_to "Manage your subscriptions", edit_account_member_url(@account, @subscriber.member) %>

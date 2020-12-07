@@ -1,0 +1,28 @@
+<div class="page-header d-flex justify-content-between">
+  <%= link_to account_root_path(@account) do %>
+   < Home
+  <% end %>
+  <%= link_to edit_account_check_in_path(@account, @check_in), class: 'btn btn-secondary' do %>
+    Edit
+  <% end %>
+</div>
+
+<h1><%= @check_in.name %></h1>
+<p >
+  <strong>Schedule: </strong><%= checkin_display_name(@check_in).capitalize %><br>
+  <strong>Next check-in: </strong><%= @check_in.schedule.next_occurrence.strftime("%d. %b %Y %H:%M") %>.  <%= link_to "Send now", send_now_account_check_in_path(@account, @check_in), method: :post %> <br>
+  <strong><%= pluralize @check_in.subscribers.size, "subscriber", "subscribers" %>.</strong>  <%= link_to "Manage Subscribers", account_subscribers_path(@account, @check_in) %><br>
+  <%= link_to "Send a test to yourself", send_test_account_check_in_path(@account, @check_in), method: :post, remote: true %>
+  
+</p>
+
+<div class="d-flex justify-content-between mt-4 mb-3">
+  <h2 class="mb-0">Answers</h2>
+
+  <div><%= link_to "Add an answer", new_account_check_in_answer_path(@account, @check_in), class: "btn btn-primary" %></div>
+</div>
+<div class="list-group list-group-flush">
+  <% @check_in.answers.order(created_at: :desc).each do |answer| %>
+    <%= render answer %>
+  <% end %>
+</div>

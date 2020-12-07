@@ -1,0 +1,47 @@
+
+
+
+<div class="row">
+  <div class="col-sm-6">
+    <h1>Check-ins</h1>
+  </div>
+
+  <div class="col-sm-6 text-right">
+  <%= link_to new_account_check_in_path(@account), class: 'btn btn-primary' do %>
+    Add New Check-in
+  <% end %>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+    
+        <th>CheckIn</th>
+        <th>Schedule period</th>
+        <th>Weekday</th>
+        <th>Time</th>
+            
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @check_ins.each do |check_in| %>
+        <%= content_tag :tr, id: dom_id(check_in), class: dom_class(check_in) do %>
+          
+            <td><%= link_to check_in.name, account_check_in_path(@account, check_in) %></td>
+            <td><%= check_in.schedule_period %></td>
+            <td>
+              <% check_in.weekday.each do |weekday| %>
+                <span class="badge badge-success"><%= weekday %></span>
+              <% end %>
+            </td>
+            <td><%= check_in.time %></td>
+          
+          
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  account: one
+  user: one
+  schedule_period: 1
+  weekday: 
+  time: 2020-11-12 13:19:30
+
+two:
+  name: MyString
+  account: two
+  user: two
+  schedule_period: 1
+  weekday: 
+  time: 2020-11-12 13:19:30

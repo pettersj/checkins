@@ -1,0 +1,60 @@
+<%= form_with(model: [@account, check_in], data: {controller: "checkin"}, class: "mt-4", local: true) do |form| %>
+  <% if check_in.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(check_in.errors.count, "error") %> prohibited this check_in from being saved:</h2>
+
+      <ul>
+      <% check_in.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form.hidden_field :start_date, value: Date.today, class: 'form-control'  if check_in.new_record?%>
+  <%= form.hidden_field :user_id, value: current_user.id %>
+  <%= form.hidden_field :account_id, value: @account.id %>
+
+  <div class="form-group">
+    <%= form.label :check_in, for: :name %>
+    <%= form.text_field :name, class: 'form-control', placeholder: "What have you been working on the past week?" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :how_often_do_you_want_to_send_this?, for: :schedule_period %>
+    <%= form.select :schedule_period, [["Daily", "daily"], ["Weekly", 'weekly'], ["Every two weeks", "two_weeks"], ["Monthly", "monthly"]], {include_blank: false}, class: 'form-control', data: {target: "checkin.schedule", action: "checkin#setSchedule"} %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label "At which day(s) of the week?", for: :weekday, data: {target: "checkin.label"} %>
+    <%= form.select :weekday, ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'], {include_blank: false, include_hidden: false}, class: 'form-control', multiple: true, data: {target: "checkin.weekday"} %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :time_of_day, for: :time %>
+    <%= form.time_select :time, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <% if check_in.persisted? %>
+      <%= form.label :status %>
+      <%= form.select :status, ['active', 'inactive'], {include_blank: false, include_hidden: false}, class: 'form-control' %>
+    <% end %>
+  </div>
+
+
+  <div class="form-group">
+    <% if check_in.persisted? %>
+      <div class="float-right">
+        <%= link_to 'Delete', account_check_in_path(@account, check_in), method: :delete, class: "text-danger", data: { confirm: 'Are you sure? This will also delete any anwer to this this check-in.' } %>
+      </div>
+    <% end %>
+
+    <%= form.submit class: 'btn btn-primary' %>
+
+    <% if check_in.persisted? %>
+      <%= link_to "Cancel", account_check_in_path(@account, check_in), class: "btn btn-link" %>
+    <% else %>
+      <%= link_to "Cancel", account_check_ins_path(@account), class: "btn btn-link" %>
+    <% end %>
+  </div>
+<% end %>

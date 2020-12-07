@@ -1,0 +1,26 @@
+<%= form_with(model: [@account, subscriber], local: true) do |form| %>
+  <% if subscriber.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(subscriber.errors.count, "error") %> prohibited this subscriber from being saved:</h2>
+
+      <ul>
+      <% subscriber.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.hidden_field :account_id, value: @account.id %>
+  <%= form.hidden_field :check_in_id, value: @check_in.id %>
+
+
+  <div class="form-group">
+    <%= form.label :email %>
+    <%= form.email_field :email, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.submit "Add subscriber", class: 'btn btn-primary' %>
+  </div>
+<% end %>

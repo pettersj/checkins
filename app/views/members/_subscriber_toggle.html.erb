@@ -1,0 +1,14 @@
+<div data-controller="subscriber" data-subscriber-member-id="<%= member.id %>" data-subscriber-subscriber-id="<%= subscriber.id if !subscriber.nil? %>" data-subscriber-account-id="<%= @account.id %>" data-subscriber-checkin-id="<%= check_in.id %>">
+  <% if !subscriber.nil? %>
+    <div class="custom-control custom-switch" >
+      <input type="checkbox" checked="checked" class="custom-control-input" id="<%= dom_id(subscriber) %>" data-action="subscriber#unsubscribe">
+      <label class="custom-control-label" for="<%= dom_id(subscriber) %>">Unsubscribe</label>
+    </div>
+  <% else %>
+    <% id = SecureRandom.hex(10) %>
+    <div class="custom-control custom-switch" >
+      <input type="checkbox"  class="custom-control-input" id="<%= id %>" data-action="subscriber#subscribe">
+      <label class="custom-control-label" for="<%= id %>">Subscribe</label>
+    </div>
+  <% end %>
+</div>

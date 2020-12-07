@@ -1,0 +1,66 @@
+<div class="page-header d-flex justify-content-between mb-4">
+  <%= link_to "< Check-in: #{@check_in.name}", account_check_in_path(@account, @check_in) %>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-6">
+    <h1>Subscribers</h1>
+  </div>
+
+  <div class="col-sm-6 text-right">
+    <%= link_to new_account_subscriber_path(@account), class: 'btn btn-primary' do %>
+      Add New Subscriber
+    <% end %>
+
+    <%= link_to "Import", import_account_subscribers_path(@account, @check_in), class: "ml-2" %>
+  </div>
+</div>
+
+
+<% if @members.any? %>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Subscription</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @members.each do |member| %>
+          <% subscriber = member.subscribers.where(check_in: @check_in).first %>
+
+          <%= content_tag :tr, class: dom_class(member) do %>
+          
+            <td><%= member.user.name %></td>
+            <td><%= member.user.email %></td>
+            <td>
+                <div id="<%= dom_id(member) %>">
+                    <%= render 'members/subscriber_toggle', subscriber: subscriber, member: member, check_in: @check_in %>
+                </div>
+            </td>
+                      
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+
+<h3 class="mt-4">There are no subscribers yet</h3>
+
+Click "Add New Subscriber" to add individual emails, or click "Import" to import a list of email-adresses. 
+
+<% end %>
+
+
+
+
+
+
+
+
+

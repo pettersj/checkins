@@ -1,0 +1,17 @@
+<div class="page-header">
+	<% if @account.user == current_user %>
+  	<%= link_to "< Users", account_members_path(@account) %>
+  <% else %>
+  	<%= link_to "< Home", account_root_path(@account) %>
+  <% end %>
+  <span class="float-right"><%= link_to "Edit subscriptions", edit_account_member_path(@account, @member) if current_user == @member.user || @account.user == current_user%></span>
+</div>
+
+<h1><%= @member.user.name %> <small class="text-muted">(<%= @member.user.email %>)</small></h1>
+
+<div class="answers mt-5">
+	<h3>Answers</h3>
+	<% @member.answers.order(created_at: :desc).each do |answer| %>
+		<%= render answer %>
+	<% end %>
+</div>

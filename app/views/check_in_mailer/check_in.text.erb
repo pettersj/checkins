@@ -1,0 +1,13 @@
+<%= @check_in.name %>
+
+
+
+
+This is an automatic check-in from <%= @account.name %>. Answer by replying to this email, or click <%= link_to "here", new_account_check_in_answer_url(@account, @check_in) %> to answer in the app. You can also view all answers to this check-in, by logging in to your account <%= link_to "here", account_check_in_url(@account, @check_in) %>.
+
+
+-----
+
+This message was sent from <%= link_to @account.name, account_root_url(@account) %> through <%= link_to "CheckIn", root_url %>
+
+<%= link_to "Manage your subscriptions", edit_account_member_url(@account, @subscriber.member) %>

@@ -1,0 +1,48 @@
+<div class="page-header">
+  <%= link_to "< Admin", account_admin_path(@account) %>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-6">
+    <h1>Users</h1>
+  </div>
+
+  <div class="col-sm-6 text-right">
+  <%= link_to new_account_member_path(@account), class: 'btn btn-primary' do %>
+    Add New User
+  <% end %>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Email</th>
+        <th>Subscriptions</th>
+        <th>Answers</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @members.each do |member| %>
+        <%= content_tag :tr, id: dom_id(member), class: dom_class(member) do %>
+          <td><%= link_to member.user.name, account_member_path(@account, member) %></td>
+          <td><%= member.user.email %></td>
+          <td><%= member.subscribers.size %></td>
+          <td><%= member.answers.size %></td>
+          <th>
+            <% if @owner %>
+              <%= link_to "Delete", account_member_path(@account, member), method: :delete, data: {confirm: "Are you sure? "} %>
+            <% else %>
+              <span class="text-muted" title="Only <%= @account.user.name %> can delete users">Delete</span>
+            <% end %>
+          </th>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

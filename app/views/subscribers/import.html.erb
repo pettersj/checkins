@@ -1,0 +1,10 @@
+<h2>Import</h2>
+
+<%= form_with url: import_account_subscribers_path(@account, @check_in) do |form| %>
+	
+	<p>Paste a list of emails. Separate them by a comma</p>
+	<%= form.text_area :list, placeholder: "name@example.com, name2@example.com, name3@example.com", class: "form-control", required: true %>
+	<div class="mt-3">
+		<%= form.submit "Add subscribers", class: "btn btn-primary" %>
+	</div>
+<% end %>

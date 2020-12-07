@@ -1,0 +1,38 @@
+<%= form_with(model: [@account, @check_in, answer], local: true) do |form| %>
+  <% if answer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(answer.errors.count, "error") %> prohibited this answer from being saved:</h2>
+
+      <ul>
+      <% answer.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.hidden_field :check_in_id, value: @check_in.id %>
+  <%= form.hidden_field :user_id, value: current_user.id %>
+  <%= form.hidden_field :account_id, value: @account.id %>
+  <%= form.hidden_field :member_id, value: @member.id %>
+
+  <div class="form-group">
+    <%= form.rich_text_area :body,  placeholder: "Your answer here" %>
+  </div>
+
+  <div class="form-group">
+    <% if answer.persisted? %>
+      <div class="float-right">
+        <%= link_to 'Destroy', account_check_in_answer_path(@account, @check_in, answer), method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
+      </div>
+    <% end %>
+
+    <%= form.submit class: 'btn btn-primary' %>
+
+    <% if answer.persisted? %>
+      <%= link_to "Cancel", account_check_in_path(@account, @check_in), class: "btn btn-link" %>
+    <% else %>
+      <%= link_to "Cancel", account_check_in_path(@account, @check_in), class: "btn btn-link" %>
+    <% end %>
+  </div>
+<% end %>

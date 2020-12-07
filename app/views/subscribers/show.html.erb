@@ -1,0 +1,21 @@
+<div class="page-header">
+  <%= link_to subscribers_path, class: 'btn btn-default' do %>
+    All Subscribers
+  <% end %>
+  <%= link_to edit_subscriber_path(@subscriber), class: 'btn btn-primary' do %>
+    Edit
+  <% end %>
+  <h1>Show subscriber</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Member:</dt>
+  <dd><%= @subscriber.member %></dd>
+
+  <dt>Check in:</dt>
+  <dd><%= @subscriber.check_in %></dd>
+
+  <dt>Account:</dt>
+  <dd><%= @subscriber.account %></dd>
+
+</dl>

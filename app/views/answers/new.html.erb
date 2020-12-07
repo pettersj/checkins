@@ -1,0 +1,8 @@
+<div class="page-header mb-3">
+	<%= link_to "<- #{@check_in.name}", account_check_in_path(@account, @check_in) %>
+</div>
+
+<h6 class="mb-0 font-weight-bold">New answer to</h6>
+<h4><%= @check_in.name %></h4>
+
+<%= render 'form', answer: @answer %>

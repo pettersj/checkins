@@ -1,0 +1,19 @@
+<div id="<%= dom_id(@check_in) %>" bgcolor="#FFFFFF" style="font-size: 16px; background-color: #FFFFFF;"> 
+
+	<h2><%= @check_in.name %></h2>
+
+	<p style="margin-top: 60px;">
+		This is an automatic check-in from <%= @account.name %>. <strong>Answer by replying to this email,</strong> or click <%= link_to "here", new_account_check_in_answer_url(@account, @check_in) %> to answer in the app. You can also view all answers to this check-in, by logging in to your account <%= link_to "here", account_check_in_url(@account, @check_in) %>.
+	</p>
+
+
+	<hr id="footer-hr" style="margin-top: 40px;">
+	<footer style="font-size: 0.7em;">
+		<p>
+			This message was sent from <%= link_to @account.name, account_root_url(@account) %> through <%= link_to "Checkin", root_url %>
+			<br>
+			<%= link_to "Manage your subscriptions", edit_account_member_url(@account, @subscriber.member) %>
+		</p>
+	</footer>
+					
+</div>

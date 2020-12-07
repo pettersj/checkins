@@ -1,0 +1,39 @@
+<div class="page-header">
+	<%= link_to "< Home", account_root_path(@account) %>
+</div>
+
+<h1 class="mb-5">Admin</h1>
+
+<% if @account.user ==  current_user %>
+	<%= link_to "Account Settings", account_edit_path(@account.id), class: "h3" %> 
+	<p>
+		Edit Account Name, Billing Email and Change Owner
+	</p>
+<% else %>
+	<h3>Account Settings</h3>
+	<p>
+		Edit Account Name, Billing Email and Change Owner <br>
+		<span class="text-muted">Only <%= @account.user.name %> has access to this</span>
+	</p>
+<% end %>
+
+<% if @account.user ==  current_user %>
+	<%= link_to "Billing", account_billing_path(@account), class: 'h3' %> 
+	<p>
+		View invoices, Edit Billing Information, Change Card, View Plan and Cancel your account
+	</p>
+<% else %>
+	<h3>Billing</h3>
+	<p>
+		View invoices, Edit Billing Information, Change Card, View Plan and Cancel your account <br>
+		<span class="text-muted">Only <%= @account.user.name %> has access to this</span>
+	</p>
+
+<% end %>
+
+
+<%= link_to "Users", account_members_path(@account), class: "h3" %>
+<p>
+	View, add or remove users. Manage their subscription.
+</p>
+

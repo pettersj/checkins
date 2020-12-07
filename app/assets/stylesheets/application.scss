@@ -1,0 +1,44 @@
+// $navbar-default-bg: #312312;
+// $light-orange: #ff8c00;
+// $navbar-default-color: $light-orange;
+//= require actiontext
+
+
+@import "font-awesome-sprockets";
+@import "font-awesome";
+@import "bootstrap";
+@import "jumpstart/sticky-footer";
+@import "jumpstart/announcements";
+
+// Fixes bootstrap nav-brand container overlap
+@include media-breakpoint-down(xs) {
+  .container {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+body {
+	// font-family: ff-meta-serif-web-pro, serif;
+	// font-family: 'Playfair Display', Georgia, serif;
+
+	// font-family: Arial, sans-serif;
+}
+
+
+// Masquerade alert shouldn't have a bottom margin
+body > .alert {
+  margin-bottom: 0;
+}
+
+
+.pricing-card-title {
+	text-align: center;
+}
+
+.rounded-xl	{
+	border-radius: 20px;
+	.card-header {
+		border-radius: 20px 20px 0 0;
+	}
+}

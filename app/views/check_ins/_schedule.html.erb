@@ -1,0 +1,8 @@
+<% if !check_in.schedule.next_occurrence.nil? %>
+	<div class="card bg-light text-muted">
+		<div class="card-body">
+			Next run: <%= check_in.schedule.next_occurrence.strftime("%d. %b %Y %H:%M")  %>
+		</div>
+	</div>
+<% end %>
+

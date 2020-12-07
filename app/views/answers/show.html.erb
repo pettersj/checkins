@@ -1,0 +1,24 @@
+<div class="page-header">
+  <%= link_to answers_path, class: 'btn btn-default' do %>
+    All Answers
+  <% end %>
+  <%= link_to edit_answer_path(@answer), class: 'btn btn-primary' do %>
+    Edit
+  <% end %>
+  <h1>Show answer</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>User:</dt>
+  <dd><%= @answer.user %></dd>
+
+  <dt>Account:</dt>
+  <dd><%= @answer.account %></dd>
+
+  <dt>Check in:</dt>
+  <dd><%= @answer.check_in %></dd>
+
+  <dt>Body:</dt>
+  <dd><%= @answer.body %></dd>
+
+</dl>

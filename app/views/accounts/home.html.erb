@@ -1,0 +1,81 @@
+<div class="d-flex justify-content-between align-items-end">
+	<h1 class="mb-0"><%= @account.name %></h1>
+	<div><%= link_to "Admin", account_admin_path(@account) %></div>
+</div>
+
+<div class="checkins mt-5">
+	<div class="d-flex justify-content-between align-items-end mb-2">
+		<h3 class="mb-0">Check-ins</h3>
+		<div>
+			<%= link_to "Add a check-in", new_account_check_in_path(@account), class: "btn btn-primary" if @check_ins.any?%>
+		</div>
+	</div>
+
+
+	<% if @check_ins.any? %>
+		<div class="table-responsive">
+		  <table class="table table-bordered table-hover">
+		    <thead>
+		      <tr>
+		    
+		        <th>Check-in</th>
+		        <th>Schedule</th>
+		        <th>Answers</th>
+		        <th>Subscribers</th>
+		        <th>Status</th>
+		            
+		      </tr>
+		    </thead>
+
+		    <tbody>
+		      <% @check_ins.each do |check_in| %>
+		        <%= content_tag :tr, id: dom_id(check_in), class: dom_class(check_in) do %>
+		          
+		            <td><%= link_to check_in.name, account_check_in_path(@account, check_in), class: "text-body font-weight-bold" %></td>
+		            <td>
+									<%= checkin_display_name(check_in).capitalize %>
+		            </td>
+		            <td><%= link_to check_in.answers.size, account_check_in_path(@account, check_in), class: "text-body font-weight-bold" %></td>
+		            <td><%= link_to check_in.subscribers.size, account_subscribers_path(@account, check_in), class: "text-body font-weight-bold" %></td>
+		            <td>
+		            	<% if check_in.active? %>
+		            		<span class="badge badge-info">Active</span>
+		            	<% else %>
+		            		<span class="badge badge-secondary">Inactive</span>
+		            	<% end %>
+		            	
+		            </td>
+		        <% end %>
+		      <% end %>
+		    </tbody>
+		  </table>
+		</div>
+	<% else %>
+
+	<div class="no-checkins-info">
+		<h5>You don't have any check-ins yet</h5>
+		<%= link_to "Create your first check-in", new_account_check_in_path(@account), class: "btn btn-primary btn-lg" %>
+	</div>
+
+	<% end %>
+
+</div>
+
+
+<h3 class="mt-5">Updates</h3>
+
+	<% if @answers.any? %>
+		<% @account.answers.order(created_at: :desc).each do |answer| %>
+			<%= render answer %>
+		<% end %>
+	<% else %>
+	<div class="no-answers-info">
+		<p>This is where the feed of last answers to everyone of your check-ins will be. Check back here later when your responses start coming in. <br>
+		To view answers to a specific check-in, click the checkin in the list above.</p>
+
+	<% end %>
+
+
+
+
+

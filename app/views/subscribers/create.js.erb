@@ -1,0 +1,5 @@
+if (document.getElementById('<%= dom_id(@member) %>') != null ) {
+	document.getElementById('<%= dom_id(@member) %>').innerHTML = "<%= j render 'members/subscriber_toggle', subscriber: @subscriber, member: @member, check_in: @check_in %>"
+} else {
+	document.getElementById('<%= dom_id(@check_in) %>').innerHTML = "<%= j render 'members/subscriber_toggle', subscriber: @subscriber, member: @member, check_in: @check_in %>"
+}

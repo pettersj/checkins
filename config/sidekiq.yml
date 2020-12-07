@@ -1,0 +1,28 @@
+# Sample configuration file for Sidekiq.
+# Options here can still be overridden by cmd line args.
+# Place this file at config/sidekiq.yml and Sidekiq will
+# pick it up automatically.
+---
+:verbose: false
+:concurrency: 5
+
+# Set timeout to 8 on Heroku, longer if you manage your own systems.
+:timeout: 8
+
+:max_retries: 3
+
+# you can override concurrency based on environment
+development:
+  max_retries: 0
+production:
+  :concurrency: 5
+staging:
+  :concurrency: 5
+
+:queues:
+  - default
+  - mailers
+  - active_storage_analysis
+  - active_storage_purge
+  - action_mailbox_routing
+  - action_mailbox_incineration

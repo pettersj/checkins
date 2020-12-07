@@ -1,0 +1,23 @@
+<div id="<%= dom_id(@check_in) %>" bgcolor="#FFFFFF" style="font-size: 16px; background-color: #FFFFFF;"> 
+	<h3>Summary of your check-in "<%= @check_in.name %>"</h3>
+
+	<% @answers.each do |answer| %>
+		<div style="border-bottom: 1px solid rgba(0, 0, 0, 0.125); padding-top: 10px; padding-bottom: 10px;">
+			<small><%= answer.user.name %> answered at <%= answer.created_at.strftime("%d.%b %Y - %H:%M") %></small>
+			<%= answer.body %>
+		</div>
+	<% end %>
+
+
+	<hr id="footer-hr" style="margin-top: 40px;">
+	<footer style="font-size: 0.7em;">
+		<p>
+			This message was sent from <%= link_to @account.name, account_root_url(@account) %> through <%= link_to "Checkin", root_url %>
+			<br>
+			<%= link_to "Manage your subscriptions", edit_account_member_url(@account, @subscriber.member) %>
+		</p>
+	</footer>
+
+
+	</div>
+</div>

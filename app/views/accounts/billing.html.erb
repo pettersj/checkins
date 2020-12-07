@@ -1,0 +1,107 @@
+<% if @account.stripe_subscription_id.nil? %>
+
+	<% content_for :head do %>
+		<!-- <link rel="stylesheet" href="StripeElements.css"> -->
+	  <%= tag.meta name: "stripe-public-key", content: Rails.application.credentials.send(Rails.env)[:stripe][:public_key] %>
+	<% end %>
+
+
+	<div data-controller="metered-stripe">
+		<h1>Finish setting up your account</h1>
+
+		<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+		<%= hidden_field_tag :account_id,  params[:account_id] %>
+
+
+	<div class="card">
+		<div class="card-body">
+			<p>Add yor card to start your 14 days free trial. You will get an email 7 days before your trial ends. Your first invoice will be at the end of the first period, at $5/person/month. </p>
+			<form id="subscription-form">
+				<div class="form-group">
+					<label for="name">Name on card</label>
+					<%= text_field :name, nil, id: 'name', value: current_user.name, class: "form-control", placeholder: "Name on card", required: true %>
+				</div>
+
+				<div class="form-group">
+					<label for="email">Billing Email</label>
+					<%= email_field :email, nil, id: 'email', value: @account.billing_email, placeholder: "Billing Email", class: "form-control", required: true %>
+				</div>
+
+				<div class="form-group">
+					<label for="card-element">Card</label>
+			  	<div id="card-element" class="MyCardElement form-control">
+			    	<!-- Elements will create input elements here -->
+			 		</div>
+			 	</div>
+
+			  <!-- We'll put the error messages in this element -->
+			  <div id="card-errors" role="alert" class="text-danger"></div>
+				<div class="text-success" id="subscription-success"></div>
+				<div class="text-success" id="success"></div>
+
+			  <button type="submit" id="form-submit" class="btn btn-primary" data-disable-with="Processing...">Subscribe</button>
+			</form>
+		</div>
+	</div>
+
+	</div>
+
+<% else %>
+
+	<div class="page-header">
+		<%= link_to "< Admin", account_admin_path(@account) %>
+	</div>
+
+
+	<h1>Billing</h1>
+
+	<%= link_to "Edit billing information and view invoices >", stripe_create_customer_portal_session_path(account_id: @account.id), method: :post %>
+
+	<div class="table-responsive">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Users</th>
+					<th>Plan</th>
+					<th>Status</th>
+					<th>Next Invoice Amount (estimated)</th>
+					<th>Next Invoice Due</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><%= link_to @account.members.size, account_members_path(@account) %></td>
+					<td><%= number_to_currency(@subscription.plan.amount / 100, unit: "#{@subscription.plan.currency.upcase} ") %>/<%= @subscription.plan.interval %>/user </td>
+					<td><%= @subscription.status %></td>
+
+					<td>
+						<% if @subscription.status == "trialing" %>
+							<%= number_to_currency( 0, unit: "#{@subscription.plan.currency.upcase} " )%>
+						<% else %>
+							<%= number_to_currency( @account.members.size * (@subscription.plan.amount / 100), unit: "#{@subscription.plan.currency.upcase} " )%>
+						<% end %>
+					</td>
+					<td>
+						<% if @subscription.status == "trialing" %>
+							Trial ends <%= Time.at(@subscription.current_period_end).strftime("%d.%b %Y") %>
+						<% else %>
+							<%= Time.at(@subscription.current_period_end).strftime("%d.%b %Y") %>
+						<% end %>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+<!-- 	<div class="card">
+		<div class="card-body">
+			<h3>Payment Method</h3>
+
+
+		</div>
+	</div> -->
+
+<%= link_to "Cancel Account", "#", class: "text-danger", method: :delete, data: {confirm: "Are you sure?"} %>
+
+<% end %>
+

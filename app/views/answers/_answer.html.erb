@@ -1,0 +1,22 @@
+<div class="card mb-3">
+	<div class="card-header bg-white ">
+		<div class="d-flex justify-content-between">
+			<div>
+				<% if !answer.member_id.nil? %>
+					<%= link_to account_member_path(@account, answer.member), class: "text-body" do %>
+						<%= image_tag avatar_path(answer.user, size: 80), height: 30, width: 30, class: "rounded" %> <%= answer.user_name %> 
+					<% end %>
+				<% else %>
+					<%= image_tag avatar_path(answer.user, size: 80), height: 30, width: 30, class: "rounded" %> <%= answer.user_name %> 
+				<% end %>
+					<small>answered <strong><%= link_to answer.check_in.name, account_check_in_path(@account, answer.check_in), class: "text-body" unless request.path == account_check_in_path(@account, answer.check_in) %></strong> on <%= answer.created_at.strftime("%b %d") %></small>
+				</div>
+				<div>
+					<%= link_to "Edit", edit_account_check_in_answer_path(@account, answer.check_in, answer) if current_user == answer.user %>
+				</div>
+		</div>
+	</div>
+	<div class="card-body">
+		<%= answer.body %>
+	</div>
+</div>
